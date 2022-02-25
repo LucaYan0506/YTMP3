@@ -128,5 +128,3 @@ django_heroku.settings(locals())
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CELERY_BROKER_URL = 'redis://:pe1d6dd7739aee8086fc66ee507c63dac44ecd6c38d741aa2de579ed74a4e0e9b@ec2-54-208-219-6.compute-1.amazonaws.com:30130'
