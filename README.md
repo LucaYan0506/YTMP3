@@ -19,4 +19,4 @@ python manage.py runserver
 ```
 
 ## LIVE DEMO: https://ytmp3.herokuapp.com/
-![Image of the website](https://github.com/LucaYan0506/YTMP3/blob/master/Screenshot%202022-02-19%20193931.jpg)
+![Image of the website](https://github.com/LucaYan0506/YTMP3/blob/main/Screenshot%202022-02-19%20193931.jpg)
