@@ -11,7 +11,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Youtube_to_MP3_converter.settin
 ## Get the base REDIS URL, default to redis' default
 BASE_REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
 
-app = Celery('Youtube_to_MP3_converterheroku logs --tail')
+app = Celery('Youtube_to_MP3_converterheroku')
 
 # Using a string here means the worker don't have to serialize
 # the configuration object to child processes.
@@ -23,6 +23,3 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.broker_url = BASE_REDIS_URL
-
-# this allows you to schedule items in the Django admin.
-app.conf.beat_scheduler = 'django_celery_beat.schedulers.DatabaseScheduler'
