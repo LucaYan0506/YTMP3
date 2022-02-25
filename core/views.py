@@ -80,6 +80,7 @@ def download(request):
     title = request.GET.get('title') + ".mp3"
     if title != '':
         path=os.path.normpath(title)
+        print(path)
         with open(path,'rb') as f:
             byteData=f.read()
         os.remove(title)

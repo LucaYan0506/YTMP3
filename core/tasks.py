@@ -16,4 +16,5 @@ def mp4_to_mp3(mp4_file,title):
     audioclip.close()
     videoclip.close()
     os.remove(mp4_file)
+    print(os.path.normpath(mp3_file))
     return mp3_file
