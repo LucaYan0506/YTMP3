@@ -1,0 +1,42 @@
+#container{
+    position: relative;
+    margin-top: 2vh;
+    width: 80%;
+    left:10%;
+    height: 110px;
+}
+
+#container input{
+    height: 32px;
+    width: calc(100% - 65px);
+}
+
+#tutorial{
+    background-color: whitesmoke;
+    width: 100%;
+    min-height: calc(96vh - 160px);
+    padding:2% 10%;
+    text-align: center;
+}
+
+#container-support{
+    position:fixed;
+    left:0;
+    top:0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+#container-support #support-me{
+    display: block;
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: 20%;
+    bottom: 20%;
+    text-align: center;
+    background-color: whitesmoke;
+    box-shadow: 0 0 0.6em #000;
+}

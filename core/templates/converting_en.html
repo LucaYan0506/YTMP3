@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block lang %}{{lang}}{% endblock lang %}
+
+{% block body %}
+
+<div id="converting_body" style="text-align:center;background:whitesmoke;min-height: calc(100vh - 193px);">
+    <h1 style="padding-top:3vh;">{{h1}}</h1>
+    <p>{{p}}</p>
+    <a href="/?lang={{lan}}" style="display:none;">{{a}}</a>
+</div>
+
+
+
+<script>
+    function download(){
+        window.open("/download?title={{title}}", '_blank');
+    }
+    const my_interval = setInterval(()=>{
+        fetch('/check_task?title={{title}}')
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists == true){
+                clearInterval(my_interval);
+                setTimeout(function () {
+                    document.querySelector('#converting_body h1').innerHTML = '{{complete}}';
+                    document.querySelector('#converting_body p').style.display = 'none';
+                    document.querySelector('#converting_body a').style.display = '';
+
+                    download();
+                }, 5000);
+            }
+            else{
+                console.log(false)
+            }
+        })
+    }, 2000);
+
+</script>
+{% endblock body %}

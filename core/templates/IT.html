@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block lang %}Italiano{% endblock lang %}
+
+{% block body %}
+    <div id="container-support" style="display:none">
+        <div id="support-me">
+            <h1 style="text-align: center;margin-top:3px;font-size: 2rem;width:100%;"> <label style="width:calc(100% - 50px);white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">DONAZIONE</label>
+                <button style="float:right;margin-right:3px" type="button" class="btn btn-light" onclick="close_windows()">X</button>
+            </h1>
+            <div style="overflow-y:auto;height:calc(100% - 60px)">
+                Grazie per la tua disponibilità a sostenermi! La tua donazione verrà utilizzata per sostenere i nostri costi di sviluppo e manutenzione.<br><br>
+                Se vuoi offrirci una donazione, clicca<a href="https://settleup.starlingbank.com/zhongyiyan" target="_blank">qui</a> o scansiona il QR Code qui sotto.<br>
+                <img src="{% static 'QRCode2.jpg' %}" style="width: 100%;max-width: 180px;" alt=""><br>
+                Puoi anche supportarci tramite WeChat scansionando il codice QR qui sotto<br>
+                <img src="{% static 'QrCode.jpg' %}" style="width: 100%;max-width: 180px;" alt=""><br>
+                Grazie ancora per la tua donazione!<br>
+            </div>
+        </div>
+    </div>
+
+    <div id="container">
+        <h2 style="text-align: center;">Convertitore YouTube</h2>
+        <form action="{% url 'convert' %}" method="post" id="form">
+            {% csrf_token %}
+            <input type="hidden" name="lan" value="IT">
+            <input type="text" style="width: calc(100% - 110px);padding-bottom: 7px;" placeholder="Link" name="link">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Scarica</button>
+        </form>
+    </div>
+
+    <div id="tutorial">
+        <h3 style="font-weight: bold;">Come scaricare</h3>
+        <div style="margin: 30px 0px;display: inline-block;">
+            <div style="width: 100%;text-align: left;">
+                <i class="material-icons" style="font-size: 20px;">share</i>
+                <b>Condivi</b><br>
+            </div>
+            <img src="{% static 'share_it.jpg' %}" alt="share" style="width: 100%;" >
+        </div>
+
+        <div style="margin: 30px 0px;display: inline-block;">
+            <div style="width: 100%;text-align: left;">
+                <i class="material-icons" style="font-size: 20px;">content_copy</i>
+                <b>Copia link</b>
+            </div>
+            <img src="{% static 'copy_it.jpg' %}" alt="share" style="width: 100%;" >
+        </div>
+
+        <div style="margin: 30px 0px;display: inline-block;">
+            <div style="width: 100%;text-align: left;">
+                <i class="material-icons" style="font-size: 20px;">content_paste</i>
+                <b>Incolla link su questo website (sopra)</b>
+            </div>
+            <img src="{% static 'paste_it.jpg' %}" alt="share" style="width: 100%;" >
+        </div>
+
+        <div style="margin: 30px 0px;display: inline-block;">
+            <div style="width: 100%;text-align: left;">
+                <i class="material-icons" style="font-size: 20px;">content_paste</i>
+                <b>Scarica</b>
+            </div>
+            <img src="{% static 'download_it.jpg' %}" alt="share" style="width: 100%;" >
+        </div>
+
+    </div>
+
+    <script>
+        {% if message %}
+            window.addEventListener("load", function(){
+                setTimeout(() => {
+                    alert("{{ message }}")
+                }, 200);
+            });
+        {% endif %}
+        document.querySelector('input[name="lang"]').value = location.href.substr(location.href.indexOf('lang=') + 5,)
+    </script>
+{% endblock body %}

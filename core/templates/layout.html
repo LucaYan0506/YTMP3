@@ -1,0 +1,57 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="google-site-verification" content="-yXObPkk8-3QAsrffIYsO4py50-4HEpHDXr8BX0nEko" />
+    <title>YouTube to MP3</title>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" href="#" style="margin-left:10vw"><i class="large material-icons">file_download</i></a>
+        <label style="left: calc(10vw + 41px);position: absolute;color: white;">YTMP3</label>
+        <select style="background-color:#6c757d;color:#fff;padding:5px;border-radius:10px;" onchange="location = this.value;">
+            <option hidden>{% block lang %}{% endblock lang %}</option>
+            <option value="/?lang=ZH">中文</option>
+            <option value="/?lang=EN">English</option>
+            <option value="/?lang=IT">Italiano</option>
+        </select>
+    </nav>
+   {% block body %}
+   {% endblock body %}
+   <footer style="background-color: #333742;color:white;text-align: center;">
+        <div style="background-color: #1c1d20;padding:10px;color: gray;">
+            <a href="https://leetcode.com/lucayan0506/" target="_blank"><img src="https://api.iconify.design/simple-icons/leetcode.svg?width=48" alt="leetcode"></a>
+            <a href="https://github.com/LucaYan0506/YTMP3" target="_blank"><img src="{% static 'github.png' %}" alt="github"></a>
+            <a href="https://www.linkedin.com/in/zhongyi-yan/" target="_blank"><img src="{% static 'linkedin.png'%} " alt="linkedin"></a>
+            <img style="cursor:pointer" src="https://img.icons8.com/ios-filled/50/000000/donation.png" onclick="open_windows()"/>
+            <br><br>
+            ©Copyright yancompany. All Rights Reserved. <br>
+            Design by Zhong Yi Yan
+        </div>
+   </footer>
+   <script>
+        document.addEventListener('click',(event) => {
+            if (event.target == document.querySelector('#container-support')){
+                close_windows();
+            }
+        })
+
+        function close_windows(){
+            document.querySelector('#container-support').style.display = 'none';
+        }
+        function open_windows(){
+            document.querySelector('#container-support').style.display = '';
+        }
+   </script>
+   <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+</body>
+</html>
