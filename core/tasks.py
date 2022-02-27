@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from moviepy.editor import VideoFileClip
+from pytube import YouTube
 import os
 from .models import Song_data
 
@@ -9,7 +10,8 @@ app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
         CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
 @shared_task
-def mp4_to_mp3(yt,id):
+def mp4_to_mp3(link,id):
+    yt = YouTube(link)
     streams = yt.streams.filter()
     stream= streams.first()
     mp4_file=stream.download(skip_existing=True)
