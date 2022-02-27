@@ -14,6 +14,9 @@ from pathlib import Path
 import django_heroku
 import dj_database_url
 from decouple import config
+import redis
+import os
+from urllib.parse import urlparse
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -128,3 +131,23 @@ django_heroku.settings(locals())
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+r = redis.from_url(os.environ.get("REDIS_URL"))
+BROKER_URL = redis.from_url(os.environ.get("REDIS_URL"))
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Canada/Eastern'
+
+redis_url = urlparse(os.environ.get('REDIS_URL'))
+CACHES = {
+"default": {
+"BACKEND": "redis_cache.RedisCache",
+"LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
+"OPTIONS": {
+"PASSWORD": redis_url.password,
+"DB": 0,
+}
+}
+}
