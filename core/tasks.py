@@ -9,11 +9,10 @@ app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
         CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
 @shared_task
-def mp4_to_mp3(mp4_file,id):
-    new_song = Song_data.objects.get(pk = id)
-    new_song.download_complete = True
-    new_song.save()
-
+def mp4_to_mp3(yt,id):
+    streams = yt.streams.filter()
+    stream= streams.first()
+    mp4_file=stream.download(skip_existing=True)
     mp3_file = str(id) + ".mp3"
     videoclip = VideoFileClip(mp4_file)
     audioclip = videoclip.audio
@@ -24,6 +23,7 @@ def mp4_to_mp3(mp4_file,id):
     with open(path,'rb') as f:
         byteData=f.read()
     
+    new_song = Song_data.objects.get(pk = id)
     new_song.record = byteData
     new_song.download_complete = True
     new_song.save()

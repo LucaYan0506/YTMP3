@@ -39,12 +39,9 @@ def convert(request):
                     'message':'Invalid url'
                 })
         
-        streams = yt.streams.filter()
-        stream= streams.first()
-        data=stream.download(skip_existing=True)
         new_song = Song_data(title=yt.title)
         new_song.save()
-        mp4_to_mp3.delay(data,new_song.pk)
+        mp4_to_mp3.delay(yt,new_song.pk)
         if lang == 'ZH':
             return render(request,'converting_en.html',{
                 'id':new_song.pk,
