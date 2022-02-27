@@ -4,9 +4,6 @@ from moviepy.editor import VideoFileClip
 import os
 from .models import Song_data
 
-from Youtube_to_MP3_converter.celery import app
-app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
-        CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
 @shared_task
 def mp4_to_mp3(mp4_file,id):

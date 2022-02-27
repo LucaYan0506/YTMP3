@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import django_heroku
-import dj_database_url
 from decouple import config
 import redis
 import os
@@ -132,22 +131,12 @@ django_heroku.settings(locals())
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-r = redis.from_url(os.environ.get("REDIS_URL"))
-BROKER_URL = redis.from_url(os.environ.get("REDIS_URL"))
-CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+# CELERY SETTINGS
+CELERY_BROKER_URL = os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Canada/Eastern'
+CELERY_TASK_SELERLIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
 
-redis_url = urlparse(os.environ.get('REDIS_URL'))
-CACHES = {
-"default": {
-"BACKEND": "redis_cache.RedisCache",
-"LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
-"OPTIONS": {
-"PASSWORD": redis_url.password,
-"DB": 0,
-}
-}
-}
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
