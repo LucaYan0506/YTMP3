@@ -3,6 +3,7 @@ from django.urls.base import reverse
 from django.http import HttpResponseRedirect,FileResponse,JsonResponse
 from pytube import YouTube
 from .tasks import mp4_to_mp3
+from .models import Song_data
 from io import BytesIO
 import os
 
@@ -41,10 +42,12 @@ def convert(request):
         streams = yt.streams.filter()
         stream= streams.first()
         data=stream.download(skip_existing=True)
-        mp4_to_mp3.delay(data,yt.title)
+        new_song = Song_data(title=yt.title)
+        new_song.save()
+        mp4_to_mp3.delay(data,new_song.pk)
         if lang == 'ZH':
             return render(request,'converting_en.html',{
-                'title':yt.title,
+                'id':new_song.pk,
                 'lang': '中文',
                 'lan': 'ZH',
                 'h1': '转换中...',
@@ -54,7 +57,7 @@ def convert(request):
             })
         elif lang == 'IT':
             return render(request,'converting_en.html',{
-                'title':yt.title,
+                'id':new_song.pk,
                 'lan': 'IT',
                 'lang': 'Italiano',
                 'complete': 'Conversione completato',
@@ -64,7 +67,7 @@ def convert(request):
             })
         else:
             return render(request,'converting_en.html',{
-                'title':yt.title,
+                'id':new_song.pk,
                 'lan': 'EN',
                 'lang': 'English',
                 'h1': 'Converting...',
@@ -77,16 +80,12 @@ def convert(request):
 
 #bug: if 2 users are downloading the same file one of them may not receive the file
 def download(request):
-    title = request.GET.get('title') + ".mp3"
-    if title != '':
-        path=os.path.normpath(title)
-        print(path)
-        with open(path,'rb') as f:
-            byteData=f.read()
-        os.remove(title)
-        return FileResponse(BytesIO(byteData),filename=title,as_attachment=True,content_type='audio/mpeg')
+    song = Song_data.objects.get(pk = request.GET.get('id'))
+    if song.download_complete == True:
+        byteData = song.record
+        return FileResponse(BytesIO(byteData),filename=song.title + ".mp3",as_attachment=True,content_type='audio/mpeg')
 
     return JsonResponse({'message':'wait please'},safe=False)
 
 def check_task(request):
-    return JsonResponse({'exists':os.path.exists(request.GET.get('title') + ".mp3")},safe=False)
+    return JsonResponse({'exists': Song_data.objects.get(pk = request.GET.get('id')).download_complete},safe=False)

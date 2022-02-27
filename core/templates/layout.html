@@ -16,8 +16,10 @@
 </head>
 <body>
     <nav class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" href="#" style="margin-left:10vw"><i class="large material-icons">file_download</i></a>
-        <label style="left: calc(10vw + 41px);position: absolute;color: white;">YTMP3</label>
+        <a class="navbar-brand" href="/" style="margin-left:10vw">
+            <i class="large material-icons">file_download</i>
+            <label style="margin-top:-5px;cursor:pointer;position: absolute;color: white;">YTMP3</label>
+        </a>
         <select style="background-color:#6c757d;color:#fff;padding:5px;border-radius:10px;" onchange="location = this.value;">
             <option hidden>{% block lang %}{% endblock lang %}</option>
             <option value="/?lang=ZH">中文</option>
